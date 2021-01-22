@@ -19,6 +19,9 @@ public class AutoSwitchController : MonoBehaviour
 
     // The Awake function of each class is called before the Start function. It is
     // here you should initialise class properties/variables like those above.
+
+    BuldController theBuldController;
+
     void Awake()
     {
         // Get the Animator off the game object this script is attached to as
@@ -26,19 +29,35 @@ public class AutoSwitchController : MonoBehaviour
         switchAnimator = gameObject.GetComponent<Animator>();
 
         // Let's turn off the switch to start with
-        turnOff();
-    }
 
+
+       GameObject theBuld = GameObject.FindGameObjectWithTag("Buld");
+
+       if(theBuld != null)
+       {
+        theBuldController = theBuld.GetComponent<BuldController>();
+       
+       }
+
+       
+    }
+    void Start()
+    {
+    
+    turnOff();
+    }
     public void turnOn()
     {
         switchOff = false;
         switchAnimator.SetBool("SwitchOff", switchOff);
+        theBuldController.turnOn();
     }
 
     public void turnOff()
     {
         switchOff = true;
         switchAnimator.SetBool("SwitchOff", switchOff);
+         theBuldController.turnOff();
     }
 
     void OnTriggerEnter2D(Collider2D other)

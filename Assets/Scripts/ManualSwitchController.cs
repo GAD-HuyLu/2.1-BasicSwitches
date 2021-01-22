@@ -28,6 +28,10 @@ public class ManualSwitchController : MonoBehaviour
 
     // The Awake function of each class is called before the Start function. It is
     // here you should initialise class properties/variables like those above.
+
+     BuldController theBuldController;
+
+
     void Awake()
     {
         // Get the Animator off the game object this script is attached to as
@@ -35,6 +39,19 @@ public class ManualSwitchController : MonoBehaviour
         switchAnimator = gameObject.GetComponent<Animator>();
 
         // Let's turn off the switch to start with
+         GameObject theBuld = GameObject.FindGameObjectWithTag("Buld");
+        if(theBuld != null)
+       {
+        theBuldController = theBuld.GetComponent<BuldController>();
+       
+       }
+
+
+    }
+
+    void Start()
+    {
+      
         turnOff();
     }
 
@@ -50,12 +67,14 @@ public class ManualSwitchController : MonoBehaviour
     {
         switchOff = false;
         switchAnimator.SetBool("SwitchOff", switchOff);
+        theBuldController.turnOn();
     }
 
     public void turnOff()
     {
         switchOff = true;
         switchAnimator.SetBool("SwitchOff", switchOff);
+        theBuldController.turnOff();
     }
 
     public void enableSwitch()
@@ -74,12 +93,21 @@ public class ManualSwitchController : MonoBehaviour
     {
         if (switchEnabled == true)
         {
-            switchOff = !switchOff;
-            switchAnimator.SetBool("SwitchOff", switchOff);
+            if (switchOff == true)
+            {
+                turnOn();
+             }
+            else
+            {
+                turnOff();  
+            }
+
+          
         }
-        else
+        else 
         {
             Debug.Log("Can't toggle switch as it's not enabled");
+         
         }
     }
 
